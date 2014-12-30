@@ -1,27 +1,27 @@
-def getLatestTag = { ->
+ext.getLatestTag = { ->
     return  "git describe --tags --abbrev=0".execute().text.trim()
 }
 
-def getCommitCountTotal = { ->
+ext.getCommitCountTotal = { ->
     return "git rev-list HEAD --count".execute().text.trim()
 }
 
-def getLatestCommitHash = { ->
+ext.getLatestCommitHash = { ->
     return "git rev-parse --short HEAD".execute().text.trim()
 }
 
-def getCommitCountLastTag = { ->
+ext.getCommitCountLastTag = { ->
     def latestTagText = getLatestTag()
     return "git log ${latestTagText}..HEAD --oneline".execute().in.readLines().size()
 }
 
-def getPrettyVersionName = { ->
+ext.getPrettyVersionName = { ->
     def majorMinorVersion = getLatestTag()
     def commitCount = getCommitCountLastTag()
     return sprintf('%1$s.%2$s', [majorMinorVersion, commitCount])
 }
 
-def getPrettyVersionNameWithHash = { ->
+ext.getPrettyVersionNameWithHash = { ->
     def versionName = getPrettyVersionName()
     def commitHash = getLatestCommitHash()
     return sprintf('%1$s-%2$s', [versionName, commitHash])
