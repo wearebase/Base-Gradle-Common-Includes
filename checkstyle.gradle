@@ -1,0 +1,14 @@
+apply plugin: 'checkstyle'
+
+def getCheckstyleConfigFilePath = {
+    return CHECKSTYLE_CONFIG
+}
+
+task checkstyle(type: Checkstyle) {
+    description 'Performs checks on code based on checkstyle config file provided by the gradle property CHECKSTYLE_CONFIG'
+    configFile file(getCheckstyleConfigFilePath())
+    source 'src/main/java'
+    classpath = files()
+    include '**/*.java'
+    exclude '**/gen/**'
+}
