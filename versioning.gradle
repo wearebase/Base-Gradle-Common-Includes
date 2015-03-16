@@ -3,7 +3,8 @@ ext.getLatestTag = { ->
 }
 
 ext.getCommitCountTotal = { ->
-    return "git rev-list HEAD --count".execute().text.trim()
+    def commitCount = "git rev-list HEAD --count".execute().text.trim()
+    return (commitCount == "") ? "0" : commitCount
 }
 
 ext.getLatestCommitHash = { ->
